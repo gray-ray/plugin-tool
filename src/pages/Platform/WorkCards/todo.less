@@ -1,0 +1,55 @@
+/** 日历部分 */
+
+.calendarWrap {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: auto;
+
+  #curData {
+    color: #fff;
+    background: var(--ant-primary-color);
+    border-radius: 4px;
+  }
+
+  .calendarBack {
+    width: 22px;
+    &:hover {
+      #curData();
+    }
+  }
+  .calendarGo {
+    width: 22px;
+    &:hover {
+      #curData();
+    }
+  }
+  .calendarCon {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    width: calc(100% - 44px);
+  }
+  .dataItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 16px;
+    .dateItemWeek {
+      color: #999;
+    }
+
+    .dateItemDay {
+      padding: 4px 8px;
+      cursor: pointer;
+      &:hover {
+        #curData();
+      }
+    }
+    &.activeDate {
+      .dateItemDay {
+        #curData();
+      }
+    }
+  }
+}

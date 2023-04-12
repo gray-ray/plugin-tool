@@ -1,0 +1,30 @@
+/**  配置工作台 */
+.pageWrap {
+  display: grid;
+  grid-auto-rows: minmax(100px, auto);
+  grid-column-gap: 20px;
+  grid-template-areas: 'a b b b b b b b';
+  grid-template-columns: repeat(8, 1fr);
+}
+.workList {
+  grid-area: a;
+  height: 100%;
+  background: aquamarine;
+}
+
+.worksWrap {
+  display: grid;
+  grid-area: b;
+  grid-row-gap: 10px;
+  grid-column-gap: 10px;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.movingItem {
+  background-color: transparent;
+  cursor: move;
+}
+
+.overItem {
+  border: 2px dashed #ccc;
+}
