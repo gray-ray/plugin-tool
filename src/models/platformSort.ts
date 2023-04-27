@@ -3,22 +3,39 @@ import modules from '@/pages/Platform/modules';
 
 const { moduleList } = modules;
 
-const sleep = (delay: number) => new Promise((resolve) => setTimeout(resolve, delay || 0));
-
 export default () => {
   const [sortList, setSortList] = useState<string[]>([]);
+  const DEV = [
+    'Todo',
+    'KnowledgeBase',
+    'WorkItem',
+    'Codebase',
+    'MyProject',
+    'RiskAndProblem',
+    'MyPipeline',
+  ];
+  const MANAGER = [
+    'ProjectHealth',
+    'ProjectProblem',
+    'ProjectRisk',
+    'ProjectProblemCount',
+    'ProjectRiskCount',
+    'ProjectBudget',
+  ];
 
-  const setInitialList = useCallback(async (initialState: any) => {
+  const setInitialList = useCallback((initialState: any) => {
     setSortList(() => {
       return initialState ?? [];
     });
-    await sleep(10);
   }, []);
 
-  useEffect(() => {
-    const list = (moduleList as PlatformApi.ModuleProp[])?.map((item) => item.name);
-    setSortList(list);
-  }, []);
+  // useEffect(() => {
+  //   const list = (moduleList as PlatformApi.ModuleProp[])?.map((item) => item.name);
+  //   console.log(list);
 
-  return { sortList, setSortList, setInitialList };
+  //   // MOCK 默认排序
+  //   setSortList(list);
+  // }, []);
+
+  return { sortList, setSortList, setInitialList, DEV, MANAGER };
 };

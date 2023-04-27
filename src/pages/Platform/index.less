@@ -9,15 +9,14 @@
 .workList {
   grid-area: a;
   height: 100%;
-  background: aquamarine;
 }
 
 .worksWrap {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   grid-area: b;
-  grid-row-gap: 10px;
-  grid-column-gap: 10px;
-  grid-template-columns: repeat(2, 1fr);
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 
 .movingItem {

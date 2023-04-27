@@ -1,8 +1,8 @@
 import { PageContainer } from '@ant-design/pro-components';
-import { LeftOutlined } from '@ant-design/icons';
+import { LeftOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import { history, useModel } from 'umi';
 import React, { useState } from 'react';
-import { Card, Button } from 'antd';
+import { Card, Button, Select, Checkbox, Row, Col } from 'antd';
 import styls from './index.less';
 import modules from './modules';
 
@@ -43,6 +43,7 @@ const useDrag = () => {
 
 const Index = () => {
   const { sortList } = useModel('platformSort');
+  const [selectedList, setSelectedList] = useState(sortList);
   const { dragEvent } = useDrag();
 
   const handleBack = () => {
@@ -57,6 +58,7 @@ const Index = () => {
           配置工作台
         </span>
       }
+      ghost={true}
       backIcon={<LeftOutlined />}
       breadcrumbRender={false}
       extra={
@@ -66,23 +68,63 @@ const Index = () => {
       }
     >
       <div className={styls.pageWrap}>
-        <div className={styls.workList}></div>
-        <div className={styls.worksWrap}>
-          {(sortList as string[])?.map((item, index) => {
-            const CurrentNode = moduleObject[item];
+        <div className={styls.workList}>
+          <h4>选择工作台</h4>
+          <Select
+            size="small"
+            style={{ width: '100%', marginTop: 20 }}
+            allowClear
+            placeholder="请输入"
+            options={sortList?.map((item) => ({
+              label: moduleObject?.[item]?.title,
+              value: item,
+            }))}
+          />
+          {/* 列表 */}
+          <div style={{ paddingTop: 20 }}>
+            <Checkbox.Group defaultValue={selectedList}>
+              <Row>
+                {sortList?.map((item, index) => {
+                  return (
+                    <Col
+                      span={24}
+                      key={item}
+                      style={{ height: '40px', lineHeight: '40px', verticalAlign: 'center' }}
+                      draggable={true}
+                      onDragStart={(e) => dragEvent(e, item, index)}
+                      onDragOver={(e) => dragEvent(e, item, index)}
+                      onDragEnd={(e) => dragEvent(e, item, index)}
+                    >
+                      <Checkbox value={item}>{moduleObject?.[item]?.title}</Checkbox>
+                    </Col>
+                  );
+                })}
+              </Row>
+            </Checkbox.Group>
+          </div>
+        </div>
+        <Row className={styls.worksWrap} gutter={[16, 16]}>
+          {sortList?.map((item, index) => {
+            const CurrentNode: PlatformApi.ModuleProp = moduleObject[item];
+            const { title, isFull = false } = CurrentNode;
             return (
-              <Card
+              <Col
+                key={item}
+                span={isFull ? 24 : 12}
                 id={item}
                 draggable={true}
                 onDragStart={(e) => dragEvent(e, item, index)}
                 onDragOver={(e) => dragEvent(e, item, index)}
                 onDragEnd={(e) => dragEvent(e, item, index)}
-                title={CurrentNode?.cardSetting?.title}
-                key={item}
-              />
+              >
+                <Card
+                  title={title}
+                  extra={<MinusCircleOutlined style={{ cursor: 'pointer', color: 'red' }} />}
+                />
+              </Col>
             );
           })}
-        </div>
+        </Row>
       </div>
     </PageContainer>
   );

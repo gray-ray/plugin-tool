@@ -1,7 +1,6 @@
 import { forwardRef, useImperativeHandle } from 'react';
-export const cardSetting = {
-  title: '风险/问题',
-};
+
+export const title = '风险/问题';
 
 const Index = (_, ref: any) => {
   useImperativeHandle(ref, () => ({
